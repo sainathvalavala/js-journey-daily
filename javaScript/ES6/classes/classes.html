@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      class Employee {
+        firstname;
+        lastname;
+        age;
+        dob;
+        gender;
+        getFullName() {
+          return this.firstname + this.lastname;
+        }
+        getAge(){
+          return this.age
+        }
+      }
+      let E1 = new Employee();
+      E1.firstname = "Rohit";
+      E1.lastname = "Sharma";
+      E1.age=38
+      console.log(E1.getFullName(),E1.getAge());
+      
+      
+      
+      let E2 = new Employee();
+      console.log(E2);
+      let E3 = new Employee();
+      console.log(E3);
+      let E4 = new Employee();
+      console.log(E4);
+    </script>
+  </body>
+</html>
