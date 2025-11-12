@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      //func declarative syntax
+      function add(a, b) {
+        return a + b;
+      }
+      add(2, 3);
+
+      //Function Expression(variable functions)
+      let sub = function (a, b) {
+        return a - b;
+      };
+      console.log(sub(4, 2));
+
+      //arrow syntax-1
+      let diff = (a, b) => {
+        return a - b;
+      };
+      console.log(diff(4, 3));
+
+      //arrow syntax-2
+      let mul = (a, b) => a * b;
+      console.log(mul(5, 3));
+
+      let ar = [1, 2, 3, 4, 5];
+      // ar.forEach(function (x) {
+      //   console.log(x) ;
+      // });
+      ar.forEach((x) => console.log(x));
+      // let cr = ar.filter((x) => {
+      //   return x % 2 == 0;
+      // });
+      let br = ar.filter((x) => !(x % 2));
+      console.log(br);
+    </script>
+  </body>
+</html>
