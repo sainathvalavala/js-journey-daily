@@ -8,10 +8,28 @@
   <body>
     <script>
       let x = "Abbah1234Abbah";
+      let result = "";
       //print only alphabets
-      console.log(x.replace(/[0-9]/g, ""));
-      //print only numbers
-      console.log(x.replace(/[A-z]/g, ""));
+      // console.log(x.replace(/[0-9]/g, ""));
+      for (let i in x) {
+        if (!(x[i] >= "0" && x[i] <= "9")) {
+          result += x[i];
+        }
+      }
+      console.log(result);
+
+      let b = "abcd98765efg";
+      let newResult = "";
+      // //print only numbers
+      // console.log(b.replace(/[A-z]/g, ""));
+      for (let i in b) {
+        // console.log(i)
+        // console.log(b[i])
+        if (b[i] >= "0" && b[i] <= "9") {
+          newResult += b[i];
+        }
+      }
+      console.log(newResult);
     </script>
   </body>
 </html>
