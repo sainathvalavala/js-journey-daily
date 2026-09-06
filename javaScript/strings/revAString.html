@@ -22,10 +22,10 @@
       //using for-of loop
       let z = "arun";
       let reversed = "";
-      for (let j = z.length - 1; j >= 0; j--) {
-        reversed += z[j];
+      for (const char of z) {
+        reversed = char + reversed;
       }
-      console.log(reversed);
+      console.log(reversed); // "nura"
     </script>
   </body>
 </html>
