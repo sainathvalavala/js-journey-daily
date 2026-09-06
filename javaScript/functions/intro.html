@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+//       ``` JavaScript Functions:
+// - Function Declaration: function name() {} - hoisted, can be called before declaration
+// - Function Expression: const name = function() {} - not hoisted
+// - Arrow Function: const name = () => {} - lexical this, concise syntax
+// - Parameters: values passed to functions (function greet(name) {})
+// - Return: sends value back (return result)
+// - Scope: variables inside functions are local
+// - Closures: functions can access outer scope variables
+// - Callbacks: functions passed as arguments to other functions
+// - IIFE: Immediately Invoked Function Expressions (function() {})()
+// - Higher-Order Functions: take/return functions (map, filter, reduce)```
+      //function declaration
+      function sum(x, y) {
+        // console.log(x + y);
+        return x + y;
+      }
+      var z = sum(2, "3"); //undefined if the sum function doesnt have a return statement
+      console.log(z);
+      //function expression
+      let x = function multiply(a, b) {
+        return a * b;
+      };
+      console.log(x(3, 4));
+      // console.log(mul(3,4))
+    </script>
+  </body>
+</html>
