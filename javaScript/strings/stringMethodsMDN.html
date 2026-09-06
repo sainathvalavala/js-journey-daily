@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MDN JavaScript String Methods Reference</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0b0f19;
+      --bg-secondary: #111827;
+      --bg-card: rgba(17, 24, 39, 0.75);
+      --bg-card-hover: rgba(31, 41, 55, 0.85);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-focus: #6366f1;
+      --text-primary: #f3f4f6;
+      --text-secondary: #9ca3af;
+      --text-muted: #6b7280;
+      --accent-blue: #38bdf8;
+      --accent-purple: #818cf8;
+      --accent-green: #34d399;
+      --accent-yellow: #fbbf24;
+      --accent-rose: #fb7185;
+      --code-bg: #030712;
+      --tag-bg: rgba(99, 102, 241, 0.15);
+      --tag-text: #a5b4fc;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+      --shadow-lg: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at 10% 20%, #0d1527 0%, var(--bg-primary) 90%);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      padding-bottom: 60px;
+    }
+
+    /* Header & Hero */
+    header {
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.85) 0%, rgba(11, 15, 25, 0) 100%);
+      border-bottom: 1px solid var(--border-color);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 18px 24px;
+    }
+
+    .header-container {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-badge {
+      background: linear-gradient(135deg, #6366f1 0%, #38bdf8 100%);
+      color: #fff;
+      font-weight: 800;
+      font-size: 1.1rem;
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .logo-text h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #f9fafb, #93c5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .logo-text p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .stats-bar {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .stat-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      padding: 4px 12px;
+      border-radius: 9999px;
+      display: flex;
+      gap: 6px;
+    }
+
+    .stat-pill span.num {
+      color: var(--accent-blue);
+      font-weight: 700;
+    }
+
+    /* Main Container */
+    main {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 30px 24px;
+    }
+
+    .hero-intro {
+      margin-bottom: 28px;
+      text-align: center;
+    }
+
+    .hero-intro h2 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-intro p {
+      color: var(--text-secondary);
+      max-width: 720px;
+      margin: 0 auto;
+      font-size: 1rem;
+    }
+
+    /* Controls: Search and Filters */
+    .controls-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .search-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      background: rgba(3, 7, 18, 0.6);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      font-size: 1rem;
+      padding: 12px 16px 12px 46px;
+      border-radius: var(--radius-md);
+      outline: none;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .search-input:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+    }
+
+    .search-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .filter-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .filter-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .filter-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .filter-btn.active {
+      background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 2px 12px rgba(99, 102, 241, 0.35);
+    }
+
+    .badge-count {
+      font-size: 0.75rem;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 1px 6px;
+      border-radius: 999px;
+    }
+
+    /* Grid Layout */
+    .methods-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 20px;
+    }
+
+    /* Method Card */
+    .method-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .method-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #6366f1, #38bdf8);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .method-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(99, 102, 241, 0.35);
+      box-shadow: var(--shadow-lg);
+      background: var(--bg-card-hover);
+    }
+
+    .method-card:hover::before {
+      opacity: 1;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+      gap: 12px;
+    }
+
+    .method-name {
+      font-family: 'Fira Code', monospace;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #60a5fa;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      word-break: break-word;
+    }
+
+    .method-name .proto {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 400;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .tag-category {
+      background: var(--tag-bg);
+      color: var(--tag-text);
+    }
+
+    .tag-static {
+      background: rgba(251, 191, 36, 0.15);
+      color: var(--accent-yellow);
+    }
+
+    .tag-mutating {
+      background: rgba(251, 113, 133, 0.15);
+      color: var(--accent-rose);
+    }
+
+    .tag-deprecated {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+    }
+
+    .method-description {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      flex-grow: 1;
+    }
+
+    .syntax-box {
+      background: var(--code-bg);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius-sm);
+      padding: 8px 12px;
+      margin-bottom: 14px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.82rem;
+      color: #e2e8f0;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .syntax-label {
+      color: var(--text-muted);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 3px;
+      font-weight: 600;
+      display: block;
+    }
+
+    .code-preview-wrapper {
+      background: var(--code-bg);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: var(--radius-sm);
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+
+    .code-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 4px 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .code-block {
+      padding: 10px 12px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.82rem;
+      color: #cbd5e1;
+      overflow-x: auto;
+      line-height: 1.5;
+    }
+
+    .copy-btn, .run-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-secondary);
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .copy-btn:hover, .run-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .interactive-output {
+      padding: 6px 10px;
+      background: rgba(16, 185, 129, 0.1);
+      border-top: 1px dashed rgba(16, 185, 129, 0.3);
+      color: var(--accent-green);
+      font-family: 'Fira Code', monospace;
+      font-size: 0.78rem;
+      display: none;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.82rem;
+    }
+
+    .returns-info {
+      color: var(--text-muted);
+      font-size: 0.78rem;
+    }
+
+    .returns-info strong {
+      color: var(--text-secondary);
+    }
+
+    .mdn-link {
+      color: var(--accent-purple);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.82rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: color 0.15s;
+    }
+
+    .mdn-link:hover {
+      color: #a5b4fc;
+      text-decoration: underline;
+    }
+
+    /* Empty state */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 20px;
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px dashed var(--border-color);
+    }
+
+    .empty-state h3 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .empty-state p {
+      color: var(--text-muted);
+    }
+
+    /* Quick playground drawer */
+    .playground-banner {
+      margin-top: 40px;
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.9) 100%);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .playground-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .playground-header h3 {
+      font-size: 1.25rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .playground-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 850px) {
+      .playground-body {
+        grid-template-columns: 1fr;
+      }
+      .methods-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-intro h2 {
+        font-size: 1.7rem;
+      }
+    }
+
+    .pg-editor {
+      background: #030712;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      color: #f3f4f6;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.9rem;
+      min-height: 120px;
+      resize: vertical;
+      width: 100%;
+      outline: none;
+    }
+
+    .pg-editor:focus {
+      border-color: var(--border-focus);
+    }
+
+    .pg-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+      border: none;
+      color: #fff;
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+
+    .pg-output-box {
+      background: #030712;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.9rem;
+      color: var(--accent-green);
+      overflow-y: auto;
+      min-height: 120px;
+      white-space: pre-wrap;
+    }
+
+    /* Scroll to top */
+    .scroll-top {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #4f46e5;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.2s ease;
+      z-index: 90;
+    }
+
+    .scroll-top.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Header -->
+  <header>
+    <div class="header-container">
+      <div class="logo-area">
+        <div class="logo-badge">JS / MDN</div>
+        <div class="logo-text">
+          <h1>String Methods Reference</h1>
+          <p>Official Mozilla Developer Network (MDN) Specifications</p>
+        </div>
+      </div>
+      <div class="stats-bar">
+        <div class="stat-pill">
+          <span>Total Methods:</span>
+          <span class="num" id="totalCount">0</span>
+        </div>
+        <div class="stat-pill">
+          <span>Showing:</span>
+          <span class="num" id="visibleCount">0</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <div class="hero-intro">
+      <h2>JavaScript String Methods</h2>
+      <p>Comprehensive, interactive reference covering all static and prototype methods of the JavaScript standard <code>String</code> object as documented on MDN.</p>
+    </div>
+
+    <!-- Search & Filter Controls -->
+    <div class="controls-panel">
+      <div class="search-wrapper">
+        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input 
+          type="text" 
+          id="searchInput" 
+          class="search-input" 
+          placeholder="Search by method name (e.g., slice, replace, at) or description..."
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="filter-tabs" id="filterTabs">
+        <button class="filter-btn active" data-category="all">
+          All <span class="badge-count" id="count-all">0</span>
+        </button>
+        <button class="filter-btn" data-category="searching">
+          Searching & Checking <span class="badge-count" id="count-searching">0</span>
+        </button>
+        <button class="filter-btn" data-category="extracting">
+          Extracting & Slicing <span class="badge-count" id="count-extracting">0</span>
+        </button>
+        <button class="filter-btn" data-category="transforming">
+          Transforming & Replacing <span class="badge-count" id="count-transforming">0</span>
+        </button>
+        <button class="filter-btn" data-category="padding-trimming">
+          Padding & Trimming <span class="badge-count" id="count-padding-trimming">0</span>
+        </button>
+        <button class="filter-btn" data-category="unicode-encoding">
+          Unicode & Validation <span class="badge-count" id="count-unicode-encoding">0</span>
+        </button>
+        <button class="filter-btn" data-category="static">
+          Static Methods <span class="badge-count" id="count-static">0</span>
+        </button>
+        <button class="filter-btn" data-category="legacy">
+          Legacy / HTML <span class="badge-count" id="count-legacy">0</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Methods Grid Container -->
+    <div class="methods-grid" id="methodsGrid"></div>
+
+    <!-- Interactive Live Playground Section -->
+    <div class="playground-banner">
+      <div class="playground-header">
+        <h3>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+          Interactive String Playground
+        </h3>
+        <span style="font-size: 0.85rem; color: var(--text-muted);">Try any JavaScript string code in real-time</span>
+      </div>
+      <div class="playground-body">
+        <div>
+          <textarea id="pgCode" class="pg-editor" spellcheck="false">const message = "JavaScript is awesome!";
+console.log("Length:", message.length);
+console.log("Upper:", message.toUpperCase());
+console.log("Includes 'awesome':", message.includes("awesome"));
+console.log("Replaced:", message.replace("awesome", "super powerful"));</textarea>
+          <div class="pg-actions">
+            <button class="btn-primary" id="runPgBtn">▶ Run Code</button>
+            <button class="copy-btn" id="clearPgBtn">Clear</button>
+          </div>
+        </div>
+        <div>
+          <div class="pg-output-box" id="pgOutput">// Output will appear here...</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-top" id="scrollTopBtn" title="Back to top">↑</button>
+
+  <script>
+    // Data representation of MDN String Methods
+    const stringMethodsData = [
+      // Static Methods
+      {
+        name: "String.fromCharCode()",
+        proto: false,
+        category: "static",
+        tags: ["Static", "Encoding"],
+        description: "Returns a string created from the specified sequence of UTF-16 code units.",
+        syntax: "String.fromCharCode(num1[, ...[, numN]])",
+        returns: "A string created from the given UTF-16 code units.",
+        example: `console.log(String.fromCharCode(65, 66, 67)); // "ABC"
+console.log(String.fromCharCode(0x2014)); // "—" (em dash)`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/fromCharCode"
+      },
+      {
+        name: "String.fromCodePoint()",
+        proto: false,
+        category: "static",
+        tags: ["Static", "Unicode"],
+        description: "Returns a string created by using the specified sequence of code points (handles astral plane/emojis).",
+        syntax: "String.fromCodePoint(num1[, ...[, numN]])",
+        returns: "A string created by using the specified sequence of code points.",
+        example: `console.log(String.fromCodePoint(9731, 9733, 9842, 0x2F804));
+console.log(String.fromCodePoint(0x1F600)); // "😀"`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/fromCodePoint"
+      },
+      {
+        name: "String.raw()",
+        proto: false,
+        category: "static",
+        tags: ["Static", "Template Literal"],
+        description: "A tag function of template literals that gets the raw string form of template literals (without interpreting escape sequences).",
+        syntax: "String.raw(strings, ...substitutions)\nString.raw`templateString`",
+        returns: "The raw string form of a given template literal.",
+        example: `const path = String.raw\`C:\\Development\\profile\\firstname\`;
+console.log(path); // "C:\\Development\\profile\\firstname"`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/raw"
+      },
+
+      // Searching & Checking
+      {
+        name: "at()",
+        proto: true,
+        category: "extracting",
+        tags: ["Extracting", "ES2022"],
+        description: "Takes an integer value and returns a new String consisting of the single UTF-16 code unit at the specified offset. Supports negative indices from the end.",
+        syntax: "str.at(index)",
+        returns: "A String containing the single UTF-16 code unit at index, or undefined if index is out of range.",
+        example: `const sentence = 'The quick brown fox jumps over the lazy dog.';
+console.log(sentence.at(4));  // "q"
+console.log(sentence.at(-4)); // "d"`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/at"
+      },
+      {
+        name: "charAt()",
+        proto: true,
+        category: "extracting",
+        tags: ["Extracting"],
+        description: "Returns a new string consisting of the single UTF-16 code unit at the given index.",
+        syntax: "str.charAt(index)",
+        returns: "A string representing the character at the specified index, or an empty string if out of range.",
+        example: `const sentence = 'The quick brown fox';
+console.log(sentence.charAt(4)); // "q"
+console.log(sentence.charAt(99)); // ""`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/charAt"
+      },
+      {
+        name: "charCodeAt()",
+        proto: true,
+        category: "unicode-encoding",
+        tags: ["Unicode", "Encoding"],
+        description: "Returns an integer between 0 and 65535 representing the UTF-16 code unit at the given index.",
+        syntax: "str.charCodeAt(index)",
+        returns: "An integer representing the UTF-16 code unit value, or NaN if index is out of range.",
+        example: `const sentence = 'The quick brown fox';
+console.log(sentence.charCodeAt(0)); // 84 (UTF-16 code for 'T')`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/charCodeAt"
+      },
+      {
+        name: "codePointAt()",
+        proto: true,
+        category: "unicode-encoding",
+        tags: ["Unicode"],
+        description: "Returns a non-negative integer that is the Unicode code point value at the given position.",
+        syntax: "str.codePointAt(pos)",
+        returns: "A non-negative integer representing the code point value, or undefined if out of bounds.",
+        example: `const icon = '☃★♲';
+console.log(icon.codePointAt(1)); // 9733 (code point of '★')`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/codePointAt"
+      },
+      {
+        name: "concat()",
+        proto: true,
+        category: "transforming",
+        tags: ["Transforming"],
+        description: "Concatenates the string arguments to the calling string and returns a new string.",
+        syntax: "str.concat(str2 [, ...strN])",
+        returns: "A new string containing the combined text of the strings provided.",
+        example: `const str1 = 'Hello';
+const str2 = 'World';
+console.log(str1.concat(' ', str2)); // "Hello World"`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/concat"
+      },
+      {
+        name: "endsWith()",
+        proto: true,
+        category: "searching",
+        tags: ["Searching"],
+        description: "Determines whether a string ends with the characters of a specified string, returning true or false.",
+        syntax: "str.endsWith(searchString[, endPosition])",
+        returns: "true if the string ends with searchString; otherwise, false.",
+        example: `const str = 'Cats are the best!';
+console.log(str.endsWith('best!')); // true
+console.log(str.endsWith('best', 17)); // true`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith"
+      },
+      {
+        name: "includes()",
+        proto: true,
+        category: "searching",
+        tags: ["Searching"],
+        description: "Performs a case-sensitive search to determine whether one string may be found within another string.",
+        syntax: "str.includes(searchString[, position])",
+        returns: "true if the search string is found anywhere within the given string; otherwise, false.",
+        example: `const sentence = 'The quick brown fox jumps over the lazy dog.';
+console.log(sentence.includes('fox')); // true
+console.log(sentence.includes('Fox')); // false (case-sensitive)`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes"
+      },
+      {
+        name: "indexOf()",
+        proto: true,
+        category: "searching",
+        tags: ["Searching"],
+        description: "Searches this string and returns the index of the first occurrence of the specified substring.",
+        syntax: "str.indexOf(searchValue[, fromIndex])",
+        returns: "The index of the first occurrence of searchValue, or -1 if not found.",
+        example: `const paragraph = 'I think Ruth\'s dog is cuter than your dog!';
+console.log(paragraph.indexOf('dog')); // 15
+console.log(paragraph.indexOf('dog', 16)); // 38`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/indexOf"
+      },
+      {
+        name: "isWellFormed()",
+        proto: true,
+        category: "unicode-encoding",
+        tags: ["Unicode", "ES2023"],
+        description: "Returns a boolean indicating whether this string contains any lone surrogates.",
+        syntax: "str.isWellFormed()",
+        returns: "true if the string does not contain lone surrogates; otherwise, false.",
+        example: `const valid = "Hello World";
+const illFormed = "Hello \\uD800 World";
+console.log(valid.isWellFormed()); // true
+console.log(illFormed.isWellFormed()); // false`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/isWellFormed"
+      },
+      {
+        name: "lastIndexOf()",
+        proto: true,
+        category: "searching",
+        tags: ["Searching"],
+        description: "Searches this string and returns the index of the last occurrence of the specified substring, searching backwards from fromIndex.",
+        syntax: "str.lastIndexOf(searchValue[, fromIndex])",
+        returns: "The index of the last occurrence of searchValue, or -1 if not found.",
+        example: `const paragraph = 'I think Ruth\'s dog is cuter than your dog!';
+console.log(paragraph.lastIndexOf('dog')); // 38`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/lastIndexOf"
+      },
+      {
+        name: "localeCompare()",
+        proto: true,
+        category: "unicode-encoding",
+        tags: ["Comparison", "i18n"],
+        description: "Returns a number indicating whether a reference string comes before, or after, or is the same as the given string in sort order.",
+        syntax: "str.localeCompare(compareString[, locales[, options]])",
+        returns: "A negative number if str comes before compareString; positive if after; 0 if equal.",
+        example: `console.log('a'.localeCompare('c')); // -1 or negative
+console.log('check'.localeCompare('against')); // 1 or positive
+console.log('a'.localeCompare('a')); // 0`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/localeCompare"
+      },
+      {
+        name: "match()",
+        proto: true,
+        category: "searching",
+        tags: ["Searching", "RegExp"],
+        description: "Retrieves the result of matching a string against a regular expression.",
+        syntax: "str.match(regexp)",
+        returns: "An Array of results, or null if no match is found.",
+        example: `const paragraph = 'The quick brown fox jumps over the lazy dog. It barked.';
+const regex = /[A-Z]/g;
+console.log(paragraph.match(regex)); // ["T", "I"]`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/match"
+      },
+      {
+        name: "matchAll()",
+        proto: true,
+        category: "searching",
+        tags: ["Searching", "RegExp", "ES2020"],
+        description: "Returns an iterator of all results matching a string against a regular expression, including capturing groups.",
+        syntax: "str.matchAll(regexp)",
+        returns: "An iterable iterator of match objects.",
+        example: `const regexp = /t(e)(st(\\d?))/g;
+const str = 'test1test2';
+const array = [...str.matchAll(regexp)];
+console.log(array[0][0]); // "test1"`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/matchAll"
+      },
+      {
+        name: "normalize()",
+        proto: true,
+        category: "unicode-encoding",
+        tags: ["Unicode"],
+        description: "Returns the Unicode Normalization Form of the string (NFC, NFD, NFKC, NFKD).",
+        syntax: "str.normalize([form])",
+        returns: "A string containing the Unicode Normalization Form of the given string.",
+        example: `const name1 = '\\u0041\\u006d\\u00e9\\u006c\\u0069\\u0065';
+const name2 = '\\u0041\\u006d\\u0065\\u0301\\u006c\\u0069\\u0065';
+console.log(name1.normalize() === name2.normalize()); // true`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize"
+      },
+      {
+        name: "padEnd()",
+        proto: true,
+        category: "padding-trimming",
+        tags: ["Padding"],
+        description: "Pads this string with a given string (repeated, if needed) so that the resulting string reaches a given length, added from the end.",
+        syntax: "str.padEnd(targetLength[, padString])",
+        returns: "A String of the specified targetLength with the padString applied from the end.",
+        example: `const str = 'Breaded Mushrooms';
+console.log(str.padEnd(25, '.')); // "Breaded Mushrooms........"`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/padEnd"
+      },
+      {
+        name: "padStart()",
+        proto: true,
+        category: "padding-trimming",
+        tags: ["Padding"],
+        description: "Pads this string with another string until the resulting string reaches the given length, added from the start.",
+        syntax: "str.padStart(targetLength[, padString])",
+        returns: "A String of the specified targetLength with padString applied from the start.",
+        example: `const cardNumber = '4242';
+console.log(cardNumber.padStart(16, '*')); // "************4242"`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/padStart"
+      },
+      {
+        name: "repeat()",
+        proto: true,
+        category: "transforming",
+        tags: ["Transforming"],
+        description: "Constructs and returns a new string which contains the specified number of copies of this string, concatenated together.",
+        syntax: "str.repeat(count)",
+        returns: "A new string containing the specified number of copies.",
+        example: `const mood = 'Happy! ';
+console.log(\`I feel \${mood.repeat(3)}\`); // "I feel Happy! Happy! Happy! "`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/repeat"
+      },
+      {
+        name: "replace()",
+        proto: true,
+        category: "transforming",
+        tags: ["Transforming", "RegExp"],
+        description: "Returns a new string with one, some, or all matches of a pattern replaced by a replacement. (Only the first match if pattern is a string).",
+        syntax: "str.replace(pattern, replacement)",
+        returns: "A new string, with one, some, or all matches of the pattern replaced.",
+        example: `const paragraph = 'I think Ruth\'s dog is cuter than your dog!';
+console.log(paragraph.replace('dog', 'ferret')); 
+// "I think Ruth's ferret is cuter than your dog!"`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace"
+      },
+      {
+        name: "replaceAll()",
+        proto: true,
+        category: "transforming",
+        tags: ["Transforming", "ES2021"],
+        description: "Returns a new string with all matches of a pattern replaced by a replacement.",
+        syntax: "str.replaceAll(pattern, replacement)",
+        returns: "A new string, with all matches of a pattern replaced by a replacement.",
+        example: `const paragraph = 'I think Ruth\'s dog is cuter than your dog!';
+console.log(paragraph.replaceAll('dog', 'ferret'));
+// "I think Ruth's ferret is cuter than your ferret!"`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replaceAll"
+      },
+      {
+        name: "search()",
+        proto: true,
+        category: "searching",
+        tags: ["Searching", "RegExp"],
+        description: "Executes a search for a match between a regular expression and this String object, returning index of first match.",
+        syntax: "str.search(regexp)",
+        returns: "The index of the first match between the regular expression and the given string, or -1 if no match was found.",
+        example: `const paragraph = 'The quick brown fox jumps over the lazy dog.';
+console.log(paragraph.search(/[^\w\s]/g)); // 43 (index of dot '.')`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/search"
+      },
+      {
+        name: "slice()",
+        proto: true,
+        category: "extracting",
+        tags: ["Extracting"],
+        description: "Extracts a section of this string and returns it as a new string, without modifying the original string. Supports negative indexes.",
+        syntax: "str.slice(indexStart[, indexEnd])",
+        returns: "A new string containing the extracted section of the string.",
+        example: `const str = 'The quick brown fox jumps over the lazy dog.';
+console.log(str.slice(31)); // "the lazy dog."
+console.log(str.slice(4, 19)); // "quick brown fox"
+console.log(str.slice(-4)); // "dog."`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/slice"
+      },
+      {
+        name: "split()",
+        proto: true,
+        category: "extracting",
+        tags: ["Extracting", "Array"],
+        description: "Takes a pattern and divides this string into an ordered list of substrings by searching for the pattern, and returns them in an array.",
+        syntax: "str.split([separator[, limit]])",
+        returns: "An Array of strings, split at each point where the separator occurs.",
+        example: `const str = 'The quick brown fox';
+const words = str.split(' ');
+console.log(words); // ["The", "quick", "brown", "fox"]
+console.log(str.split('')); // Array of individual characters`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split"
+      },
+      {
+        name: "startsWith()",
+        proto: true,
+        category: "searching",
+        tags: ["Searching"],
+        description: "Determines whether this string begins with the characters of a specified string, returning true or false.",
+        syntax: "str.startsWith(searchString[, position])",
+        returns: "true if the given characters are found at the beginning of the string; otherwise, false.",
+        example: `const str = 'Saturday night plans';
+console.log(str.startsWith('Sat')); // true
+console.log(str.startsWith('night', 9)); // true`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/startsWith"
+      },
+      {
+        name: "substring()",
+        proto: true,
+        category: "extracting",
+        tags: ["Extracting"],
+        description: "Returns the part of this string from the start index up to and excluding the end index (or to the end of the string). Swaps arguments if start > end.",
+        syntax: "str.substring(indexStart[, indexEnd])",
+        returns: "A new string containing the specified part of the given string.",
+        example: `const str = 'Mozilla';
+console.log(str.substring(1, 3)); // "oz"
+console.log(str.substring(2)); // "zilla"`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/substring"
+      },
+      {
+        name: "toLocaleLowerCase()",
+        proto: true,
+        category: "transforming",
+        tags: ["Transforming", "i18n"],
+        description: "Returns this string converted to lower case, according to any locale-specific case mappings.",
+        syntax: "str.toLocaleLowerCase([locales])",
+        returns: "A new string representing the calling string converted to lower case, according to any locale-specific case mappings.",
+        example: `const dotted = 'İSTANBUL';
+console.log(dotted.toLocaleLowerCase('tr')); // "istanbul"
+console.log(dotted.toLocaleLowerCase('en-US')); // "i̇stanbul"`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toLocaleLowerCase"
+      },
+      {
+        name: "toLocaleUpperCase()",
+        proto: true,
+        category: "transforming",
+        tags: ["Transforming", "i18n"],
+        description: "Returns this string converted to upper case, according to any locale-specific case mappings.",
+        syntax: "str.toLocaleUpperCase([locales])",
+        returns: "A new string representing the calling string converted to upper case, according to any locale-specific case mappings.",
+        example: `const city = 'istanbul';
+console.log(city.toLocaleUpperCase('tr')); // "İSTANBUL"`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toLocaleUpperCase"
+      },
+      {
+        name: "toLowerCase()",
+        proto: true,
+        category: "transforming",
+        tags: ["Transforming"],
+        description: "Returns this string converted to lowercase.",
+        syntax: "str.toLowerCase()",
+        returns: "A new string representing the calling string converted to lower case.",
+        example: `const sentence = 'The Quick Brown FOX';
+console.log(sentence.toLowerCase()); // "the quick brown fox"`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toLowerCase"
+      },
+      {
+        name: "toString()",
+        proto: true,
+        category: "transforming",
+        tags: ["Conversion"],
+        description: "Returns a string representing the specified string object.",
+        syntax: "str.toString()",
+        returns: "A string representing the calling string value.",
+        example: `const stringObj = new String('Hello world');
+console.log(stringObj.toString()); // "Hello world"`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toString"
+      },
+      {
+        name: "toUpperCase()",
+        proto: true,
+        category: "transforming",
+        tags: ["Transforming"],
+        description: "Returns this string converted to uppercase.",
+        syntax: "str.toUpperCase()",
+        returns: "A new string representing the calling string converted to upper case.",
+        example: `const sentence = 'The quick brown fox';
+console.log(sentence.toUpperCase()); // "THE QUICK BROWN FOX"`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toUpperCase"
+      },
+      {
+        name: "toWellFormed()",
+        proto: true,
+        category: "unicode-encoding",
+        tags: ["Unicode", "ES2023"],
+        description: "Returns a string where all lone surrogates of this string are replaced with the Unicode replacement character U+FFFD ().",
+        syntax: "str.toWellFormed()",
+        returns: "A new string where all lone surrogates are replaced by U+FFFD.",
+        example: `const illFormed = "Hello \\uD800 World";
+console.log(illFormed.toWellFormed()); // "Hello  World"`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toWellFormed"
+      },
+      {
+        name: "trim()",
+        proto: true,
+        category: "padding-trimming",
+        tags: ["Trimming"],
+        description: "Removes whitespace from both ends of this string and returns a new string, without modifying the original string.",
+        syntax: "str.trim()",
+        returns: "A new string representing str stripped of whitespace from both ends.",
+        example: `const greeting = '   Hello world!   ';
+console.log(greeting.trim()); // "Hello world!"`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trim"
+      },
+      {
+        name: "trimEnd() / trimRight()",
+        proto: true,
+        category: "padding-trimming",
+        tags: ["Trimming"],
+        description: "Removes whitespace from the end of this string and returns a new string.",
+        syntax: "str.trimEnd()\nstr.trimRight()",
+        returns: "A new string representing str stripped of whitespace from its end.",
+        example: `const greeting = '   Hello world!   ';
+console.log(greeting.trimEnd()); // "   Hello world!"`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trimEnd"
+      },
+      {
+        name: "trimStart() / trimLeft()",
+        proto: true,
+        category: "padding-trimming",
+        tags: ["Trimming"],
+        description: "Removes whitespace from the beginning of this string and returns a new string.",
+        syntax: "str.trimStart()\nstr.trimLeft()",
+        returns: "A new string representing str stripped of whitespace from its beginning.",
+        example: `const greeting = '   Hello world!   ';
+console.log(greeting.trimStart()); // "Hello world!   "`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trimStart"
+      },
+      {
+        name: "valueOf()",
+        proto: true,
+        category: "transforming",
+        tags: ["Conversion"],
+        description: "Returns the primitive value of the specified String object.",
+        syntax: "str.valueOf()",
+        returns: "The primitive value of the given String object.",
+        example: `const str = new String('Hello world');
+console.log(typeof str); // "object"
+console.log(typeof str.valueOf()); // "string"`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/valueOf"
+      },
+      {
+        name: "[Symbol.iterator]()",
+        proto: true,
+        category: "extracting",
+        tags: ["Iterator", "ES6"],
+        description: "Returns a new iterator object that yields the code points of the string value as individual strings.",
+        syntax: "str[Symbol.iterator]()",
+        returns: "A new String iterator object.",
+        example: `const str = 'A\\uD835\\uDC68B';
+for (const char of str) {
+  console.log(char); // "A", "𝑨", "B"
+}`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Symbol.iterator"
+      },
+
+      // Legacy / Deprecated HTML Wrapper Methods
+      {
+        name: "substr()",
+        proto: true,
+        category: "legacy",
+        tags: ["Legacy", "Deprecated"],
+        description: "Returns a portion of the string, starting at the specified index and extending for a given number of characters. (Legacy Annex B; use slice() or substring() instead).",
+        syntax: "str.substr(start[, length])",
+        returns: "A new string containing the specified portion of the given string.",
+        example: `const str = 'Mozilla';
+console.log(str.substr(1, 2)); // "oz"
+console.log(str.substr(2)); // "zilla"`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/substr"
+      },
+      {
+        name: "anchor(), bold(), link()...",
+        proto: true,
+        category: "legacy",
+        tags: ["Legacy", "HTML Wrapper"],
+        description: "Legacy HTML wrapper methods defined in Annex B: anchor(), big(), blink(), bold(), fixed(), fontcolor(), fontsize(), italics(), link(), small(), strike(), sub(), sup().",
+        syntax: "str.bold()\nstr.link(url)\nstr.fontcolor(color)",
+        returns: "A string containing the HTML formatting tag wrapping the calling string.",
+        example: `const text = 'Click here';
+console.log(text.bold()); // "<b>Click here</b>"
+console.log(text.link('https://developer.mozilla.org')); // "<a href=\\"https://developer.mozilla.org\\">Click here</a>"`,
+        mdn: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String#html_wrapper_methods"
+      }
+    ];
+
+    // State
+    let currentCategory = 'all';
+    let searchQuery = '';
+
+    // Elements
+    const methodsGrid = document.getElementById('methodsGrid');
+    const searchInput = document.getElementById('searchInput');
+    const filterTabs = document.getElementById('filterTabs');
+    const totalCountEl = document.getElementById('totalCount');
+    const visibleCountEl = document.getElementById('visibleCount');
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+    // Playground elements
+    const pgCode = document.getElementById('pgCode');
+    const runPgBtn = document.getElementById('runPgBtn');
+    const clearPgBtn = document.getElementById('clearPgBtn');
+    const pgOutput = document.getElementById('pgOutput');
+
+    // Initialize counts
+    function updateCounts() {
+      totalCountEl.textContent = stringMethodsData.length;
+      document.getElementById('count-all').textContent = stringMethodsData.length;
+      
+      const categories = ['searching', 'extracting', 'transforming', 'padding-trimming', 'unicode-encoding', 'static', 'legacy'];
+      categories.forEach(cat => {
+        const count = stringMethodsData.filter(m => m.category === cat).length;
+        const el = document.getElementById(`count-${cat}`);
+        if (el) el.textContent = count;
+      });
+    }
+
+    // Render cards
+    function renderCards() {
+      const filtered = stringMethodsData.filter(item => {
+        const matchesCategory = (currentCategory === 'all') || (item.category === currentCategory);
+        const query = searchQuery.toLowerCase().trim();
+        const matchesSearch = !query || 
+          item.name.toLowerCase().includes(query) || 
+          item.description.toLowerCase().includes(query) ||
+          item.tags.some(t => t.toLowerCase().includes(query)) ||
+          item.syntax.toLowerCase().includes(query);
+
+        return matchesCategory && matchesSearch;
+      });
+
+      visibleCountEl.textContent = filtered.length;
+
+      if (filtered.length === 0) {
+        methodsGrid.innerHTML = `
+          <div class="empty-state">
+            <h3>No string methods found</h3>
+            <p>Try refining your search keyword or selecting "All" categories.</p>
+          </div>
+        `;
+        return;
+      }
+
+      methodsGrid.innerHTML = filtered.map((item, index) => {
+        const prefix = item.proto ? 'String.prototype.' : '';
+        const tagsHtml = item.tags.map(t => {
+          let tagClass = 'tag-category';
+          if (t === 'Static') tagClass = 'tag-static';
+          if (t === 'Deprecated' || t === 'Legacy') tagClass = 'tag-deprecated';
+          return `<span class="tag ${tagClass}">${t}</span>`;
+        }).join('');
+
+        return `
+          <div class="method-card" data-index="${index}">
+            <div>
+              <div class="card-header">
+                <div class="method-name">
+                  <span class="proto">${prefix}</span>${item.name}
+                </div>
+                <div class="card-tags">
+                  ${tagsHtml}
+                </div>
+              </div>
+
+              <p class="method-description">${escapeHtml(item.description)}</p>
+
+              <div class="syntax-box">
+                <span class="syntax-label">Syntax</span>
+                <code>${escapeHtml(item.syntax)}</code>
+              </div>
+
+              <div class="code-preview-wrapper">
+                <div class="code-toolbar">
+                  <span>Example</span>
+                  <div style="display:flex; gap:6px;">
+                    <button class="run-btn" onclick="runInlineCode(this)">▶ Run</button>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                  </div>
+                </div>
+                <pre class="code-block"><code>${escapeHtml(item.example)}</code></pre>
+                <div class="interactive-output"></div>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <div class="returns-info">
+                <strong>Returns:</strong> ${escapeHtml(item.returns)}
+              </div>
+              <a href="${item.mdn}" target="_blank" rel="noopener noreferrer" class="mdn-link">
+                MDN Docs ↗
+              </a>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Helper: Escape HTML
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // Copy Code function
+    window.copyCode = function(btn) {
+      const card = btn.closest('.code-preview-wrapper');
+      const code = card.querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        const originalText = btn.textContent;
+        btn.textContent = 'Copied!';
+        btn.style.color = '#34d399';
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.color = '';
+        }, 1500);
+      });
+    };
+
+    // Run Inline Code function
+    window.runInlineCode = function(btn) {
+      const card = btn.closest('.code-preview-wrapper');
+      const code = card.querySelector('code').innerText;
+      const outputEl = card.querySelector('.interactive-output');
+
+      const logs = [];
+      const customConsole = {
+        log: (...args) => {
+          logs.push(args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' '));
+        },
+        error: (...args) => {
+          logs.push('ERROR: ' + args.join(' '));
+        },
+        warn: (...args) => {
+          logs.push('WARN: ' + args.join(' '));
+        }
+      };
+
+      try {
+        const runFn = new Function('console', code);
+        runFn(customConsole);
+        outputEl.style.display = 'block';
+        outputEl.style.color = 'var(--accent-green)';
+        outputEl.innerHTML = `<strong>Output:</strong><br>${escapeHtml(logs.join('\n') || 'Executed with no console output')}`;
+      } catch (err) {
+        outputEl.style.display = 'block';
+        outputEl.style.color = 'var(--accent-rose)';
+        outputEl.innerHTML = `<strong>Error:</strong> ${escapeHtml(err.message)}`;
+      }
+    };
+
+    // Event Listeners for Filters and Search
+    filterTabs.addEventListener('click', (e) => {
+      const btn = e.target.closest('.filter-btn');
+      if (!btn) return;
+
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentCategory = btn.dataset.category;
+      renderCards();
+    });
+
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      renderCards();
+    });
+
+    // Interactive Playground execution
+    runPgBtn.addEventListener('click', () => {
+      const code = pgCode.value;
+      const logs = [];
+      const customConsole = {
+        log: (...args) => {
+          logs.push(args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' '));
+        },
+        error: (...args) => {
+          logs.push('❌ ERROR: ' + args.join(' '));
+        },
+        warn: (...args) => {
+          logs.push('⚠️ WARN: ' + args.join(' '));
+        }
+      };
+
+      try {
+        const runFn = new Function('console', code);
+        runFn(customConsole);
+        pgOutput.style.color = 'var(--accent-green)';
+        pgOutput.textContent = logs.length > 0 ? logs.join('\n') : '// Executed successfully with no console output.';
+      } catch (err) {
+        pgOutput.style.color = 'var(--accent-rose)';
+        pgOutput.textContent = `❌ ${err.name}: ${err.message}`;
+      }
+    });
+
+    clearPgBtn.addEventListener('click', () => {
+      pgCode.value = '';
+      pgOutput.textContent = '// Editor cleared.';
+    });
+
+    // Scroll to Top
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        scrollTopBtn.classList.add('visible');
+      } else {
+        scrollTopBtn.classList.remove('visible');
+      }
+    });
+
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Init
+    updateCounts();
+    renderCards();
+  </script>
+</body>
+</html>
