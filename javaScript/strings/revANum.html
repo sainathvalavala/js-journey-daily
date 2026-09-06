@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -9,9 +9,16 @@
     <script>
       let x = 12345;
       let v = x.toString();
-      console.log(v);
+      console.log(typeof v)
       let y=v.split("").reverse().join("")
       console.log(y)
+      //count no of characters in a string
+      let a = "arohwffvwww addca";
+      let count = 0;
+      for (let i in a) {
+        count++;
+      }
+      console.log(count);
     </script>
   </body>
 </html>
