@@ -8,16 +8,16 @@
   <body>
     <script>
       //remove duplicate characters from a string
-      let x = "BalaSainathn";
-      let y = x.split("");
-      console.log(y);
-      //using Filter
-      let z = y.filter(function (a, b) {
-        if (b == y.indexOf(a)) {
-          return true;
-        }
-      });
-      console.log(z);
+      // let x = "BalaSainathn";
+      // let y = x.split("");
+      // console.log(y);
+      // //using Filter
+      // let z = y.filter(function (a, b) {
+      //   if (b == y.indexOf(a)) {
+      //     return true;
+      //   }
+      // });
+      // console.log(z);
       
       // using forEach not working
       // var f=[]
@@ -27,6 +27,14 @@
       //   }
       // })
       // console.log(f)
+
+      let a="arunaarunexx"
+      let b=""
+      for(let i in a){
+        if(!b.includes(a[i]))
+        b+=a[i]
+      }
+      console.log(b)
     </script>
   </body>
 </html>
