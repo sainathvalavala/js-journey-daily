@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Callback Functions</title>
+  </head>
+  <body>
+    <h1>Callback Functions in JavaScript</h1>
+    <p>Open the browser Console (F12 -> Console) to see the output.</p>
+
+    <script>
+      /*
+        ========================================================================
+        WHAT IS A CALLBACK FUNCTION?
+        ------------------------------------------------------------------------
+        - In JavaScript, functions are "First-Class Citizens".
+        - This means functions can be stored in variables, passed as arguments,
+          and returned from other functions.
+        - A CALLBACK FUNCTION is a function passed as an argument into another
+          function, which is then invoked (called back) inside that function.
+        - The outer function receiving the callback is called a 
+          HIGHER-ORDER FUNCTION (HOF).
+        ========================================================================
+      */
+
+      // -----------------------------------------------------------------------
+      // 1. Basic Synchronous Callback
+      // -----------------------------------------------------------------------
+      console.log("--- 1. Basic Synchronous Callback ---");
+
+      // Callback function
+      function greetUser(name) {
+        console.log("Hello, " + name + "!");
+      }
+
+      // Higher-order function that accepts a callback function as parameter
+      function processUserInput(callback) {
+        let name = "Sainath";
+        // Invoking the callback:
+        callback(name);
+      }
+
+      // Note: Pass function by reference (greetUser), NOT calling it with () (greetUser())
+      processUserInput(greetUser);
+
+      // -----------------------------------------------------------------------
+      // 2. Practical Example: Custom Calculator (Dynamic Behavior)
+      // -----------------------------------------------------------------------
+      console.log("\n--- 2. Custom Calculator using Callbacks ---");
+
+      // Operation functions (callbacks)
+      function add(a, b) {
+        return a + b;
+      }
+
+      function multiply(a, b) {
+        return a * b;
+      }
+
+      function subtract(a, b) {
+        return a - b;
+      }
+
+      // Higher-order function
+      function calculate(num1, num2, operationCallback) {
+        return operationCallback(num1, num2);
+      }
+
+      console.log("Addition:", calculate(10, 5, add)); // 15
+      console.log("Multiplication:", calculate(10, 5, multiply)); // 50
+      console.log("Subtraction:", calculate(10, 5, subtract)); // 5
+
+      // -----------------------------------------------------------------------
+      // 3. Anonymous Function & Arrow Function Callbacks
+      // -----------------------------------------------------------------------
+      console.log("\n--- 3. Inline / Arrow Function Callbacks ---");
+
+      // Passing an anonymous function directly inline
+      let divideResult = calculate(20, 4, function (a, b) {
+        return a / b;
+      });
+      console.log("Division (Anonymous):", divideResult); // 5
+
+      // Passing an arrow function directly inline
+      let powerResult = calculate(2, 3, (a, b) => a ** b);
+      console.log("Power (Arrow):", powerResult); // 8
+
+      // -----------------------------------------------------------------------
+      // 4. Built-in Array Higher-Order Methods (filter, map, forEach)
+      // -----------------------------------------------------------------------
+      console.log("\n--- 4. Built-in Array Methods using Callbacks ---");
+
+      const numbers = [1, 2, 3, 4, 5, 6];
+
+      // forEach accepts a callback executed on each element
+      console.log("Iterating with forEach:");
+      numbers.forEach(function (num) {
+        console.log("Number:", num);
+      });
+
+      // filter accepts a callback that returns true or false
+      const evens = numbers.filter((num) => num % 2 === 0);
+      console.log("Even numbers (filter):", evens); // [2, 4, 6]
+
+      // map accepts a callback that transforms each element
+      const squares = numbers.map((num) => num * num);
+      console.log("Squared numbers (map):", squares); // [1, 4, 9, 16, 25, 36]
+
+      // -----------------------------------------------------------------------
+      // 5. Asynchronous Callbacks (setTimeout)
+      // -----------------------------------------------------------------------
+      console.log("\n--- 5. Asynchronous Callback ---");
+      console.log("Timer started...");
+
+      // setTimeout accepts a callback to execute after a delay (in ms)
+      setTimeout(function () {
+        console.log(">> Async Callback: Executed after 2 seconds delay!");
+      }, 2000);
+
+      console.log("End of script (sync code finishes first)");
+    </script>
+  </body>
+</html>
