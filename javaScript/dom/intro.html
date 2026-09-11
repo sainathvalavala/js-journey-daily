@@ -1,41 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <h1>shelby</h1>
-    <h1>shelby</h1>
-    <h2 class="abc">sainath</h2>
-    <h1>shelby</h1>
-    <h2 class="abc">sainath</h2>
-    <div style="border: 5px solid red; padding: 20px" id="div"></div>
-    <script>
-      // // console.dir(document)
-      // // var x= document.createElement("b1");
-      // // x.innerText="welcome to DOM"
-      // // // document.body.appendChild(x);
-      // // var y=document.getElementById("div")
-      // // y.appendChild(x)
-      // var x = document.getElementsByTagName("h1");
-      // // for(i=0;i<=x.length;i++){
-      // //   x[i].style.color="red";
-      // // }
-      // console.log(x);
-      // var y = document.getElementsByClassName("abc");
-      // console.log(y);
-      // var z = document.querySelector("h1"); //return html collection
-      // var z = document.querySelectorAll("h1"); //returns nodelist
-      // z.forEach(function (zl) {
-      //   zl.style.color = "blue";
-      // });
-      // console.log(z);
-      var x = document.createElement("p");
-      x.innerText =
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquid laudantium itaque, odit natus iste ratione dolorum aut accusamus enim minima.";
-        document.getElementById("div").appendChild(x)
-    </script>
-  </body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOM Topics to Learn</title>
+<style>
+  :root {
+    --bg: #f6f7f9;
+    --surface: #ffffff;
+    --surface-2: #f0f2f5;
+    --border: #e2e5ea;
+    --text: #1a1d23;
+    --text-dim: #5b616e;
+    --accent: #b8560f;
+    --accent-soft: #fbeadd;
+    --shadow: 0 1px 3px rgba(0,0,0,.06), 0 8px 24px rgba(0,0,0,.04);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1115;
+      --surface: #171a20;
+      --surface-2: #1e222a;
+      --border: #2a2f3a;
+      --text: #e7e9ee;
+      --text-dim: #9aa1ad;
+      --accent: #f0954e;
+      --accent-soft: #33210f;
+      --shadow: 0 1px 3px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 40px 20px 80px; }
+  h1 { font-size: 2rem; margin: 0 0 6px; letter-spacing: -0.02em; }
+  .sub { color: var(--text-dim); font-size: 1.02rem; margin: 0 0 24px; }
+
+  .progress-bar { position: sticky; top: 0; z-index: 10; background: var(--bg); padding: 12px 0 14px; margin-bottom: 20px; border-bottom: 1px solid var(--border); }
+  .track { height: 10px; border-radius: 999px; background: var(--surface-2); overflow: hidden; border: 1px solid var(--border); }
+  .fill { height: 100%; width: 0%; background: var(--accent); border-radius: 999px; transition: width .35s ease; }
+  .pct { font-size: .85rem; color: var(--text-dim); margin-top: 6px; display: flex; justify-content: space-between; }
+  .pct button { background: none; border: none; color: var(--accent); cursor: pointer; font-size: .8rem; padding: 0; text-decoration: underline; }
+
+  .phase { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; margin-bottom: 18px; box-shadow: var(--shadow); }
+  .phase-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; flex-wrap: wrap; }
+  .phase-num { font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); background: var(--accent-soft); padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+  .phase h2 { font-size: 1.25rem; margin: 0; letter-spacing: -0.01em; }
+  .phase-desc { color: var(--text-dim); font-size: .92rem; margin: 2px 0 16px; }
+
+  ul.topics { list-style: none; margin: 0; padding: 0; }
+  label.item { display: flex; align-items: flex-start; gap: 11px; padding: 9px 10px; border-radius: 9px; cursor: pointer; transition: background .15s; }
+  label.item:hover { background: var(--surface-2); }
+  label.item input { margin-top: 3px; width: 17px; height: 17px; accent-color: var(--accent); cursor: pointer; flex-shrink: 0; }
+  .item-text strong { font-weight: 600; }
+  .item-text .note { display: block; color: var(--text-dim); font-size: .86rem; margin-top: 1px; }
+  label.item.checked .item-text strong { text-decoration: line-through; color: var(--text-dim); }
+
+  footer { margin-top: 30px; text-align: center; color: var(--text-dim); font-size: .85rem; }
+  code { background: var(--surface-2); padding: 1px 6px; border-radius: 5px; font-size: .85em; font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>DOM — Topics to Learn 🌳</h1>
+  <p class="sub">Organized by phase: query → create → manipulate → events → performance. Check things off as you go; progress saves in this browser.</p>
+
+  <div class="progress-bar">
+    <div class="track"><div class="fill" id="fill"></div></div>
+    <div class="pct"><span id="pctText">0 of 0 complete</span><button id="reset">Reset progress</button></div>
+  </div>
+
+  <div id="roadmap"></div>
+  <footer>Master querying and manipulation first — they're 80% of day-to-day DOM work.</footer>
+</div>
+
+<script>
+const ROADMAP = [
+  {
+    phase: "Phase 0",
+    title: "Foundations — what the DOM is",
+    desc: "The mental model everything else builds on.",
+    topics: [
+      ["The DOM as a live tree of the document", "JS's in-memory representation of HTML"],
+      ["Nodes vs. Elements", "Element, text node, comment node, attribute node"],
+      ["The <code>document</code> object", "Your entry point into the tree"],
+      ["Node relationships", "parent, child, sibling"],
+    ],
+  },
+  {
+    phase: "Phase 1",
+    title: "Selecting & Querying",
+    desc: "Finding the elements you want to work with.",
+    topics: [
+      ["<code>getElementById</code>", "Fastest single-element lookup by id"],
+      ["<code>getElementsByClassName</code> / <code>getElementsByTagName</code>", "Returns live HTMLCollections"],
+      ["<code>querySelector</code>", "First match by any CSS selector — the modern default"],
+      ["<code>querySelectorAll</code>", "All matches, as a static NodeList"],
+      ["Live vs. static collections", "HTMLCollection updates live; NodeList (from querySelectorAll) doesn't"],
+      ["Looping over results", "forEach on NodeList; spread/Array.from for HTMLCollection"],
+      ["<code>.closest()</code> and <code>.matches()</code>", "Find an ancestor / test a selector"],
+    ],
+  },
+  {
+    phase: "Phase 2",
+    title: "Traversing the Tree",
+    desc: "Moving from one node to nearby nodes.",
+    topics: [
+      ["<code>parentNode</code> / <code>parentElement</code>", "Go up"],
+      ["<code>children</code> vs <code>childNodes</code>", "Elements only vs. all nodes (incl. text)"],
+      ["<code>firstElementChild</code> / <code>lastElementChild</code>", "Go into"],
+      ["<code>nextElementSibling</code> / <code>previousElementSibling</code>", "Go sideways"],
+    ],
+  },
+  {
+    phase: "Phase 3",
+    title: "Creating & Inserting",
+    desc: "Building new DOM and putting it into the page.",
+    topics: [
+      ["<code>document.createElement()</code>", "Make a new element node"],
+      ["<code>createTextNode()</code>", "Make a text node"],
+      ["<code>append()</code> / <code>appendChild()</code>", "Add as last child"],
+      ["<code>prepend()</code>", "Add as first child"],
+      ["<code>before()</code> / <code>after()</code>", "Insert next to an element"],
+      ["<code>insertBefore()</code>", "Classic positional insert"],
+      ["<code>insertAdjacentHTML()</code>", "Insert an HTML string at a position"],
+      ["<code>cloneNode()</code>", "Duplicate an element (deep vs. shallow)"],
+      ["<code>DocumentFragment</code>", "Batch many inserts efficiently"],
+    ],
+  },
+  {
+    phase: "Phase 4",
+    title: "Manipulating",
+    desc: "Changing content, attributes, classes, and styles of existing elements.",
+    topics: [
+      ["<code>textContent</code>", "Read/write plain text (safe)"],
+      ["<code>innerHTML</code>", "Read/write HTML — mind XSS risk"],
+      ["<code>innerText</code> vs <code>textContent</code>", "Rendered text vs. raw text"],
+      ["<code>getAttribute</code> / <code>setAttribute</code> / <code>removeAttribute</code>", "Work with attributes"],
+      ["<code>classList</code>", "add, remove, toggle, contains"],
+      ["<code>dataset</code>", "Read/write <code>data-*</code> attributes"],
+      ["The <code>.style</code> property", "Inline styles from JS"],
+      ["<code>getComputedStyle()</code>", "Read the actual applied style"],
+      ["<code>remove()</code> / <code>replaceWith()</code> / <code>replaceChild()</code>", "Delete or swap nodes"],
+    ],
+  },
+  {
+    phase: "Phase 5",
+    title: "Events",
+    desc: "Making the page respond to the user.",
+    topics: [
+      ["<code>addEventListener</code> / <code>removeEventListener</code>", "Attach & detach handlers"],
+      ["The event object", "target, currentTarget, type"],
+      ["<code>preventDefault()</code> & <code>stopPropagation()</code>", "Control default behavior & flow"],
+      ["Propagation phases", "capturing → target → bubbling"],
+      ["Event delegation", "One listener on a parent for many children"],
+      ["Common events", "click, input, change, submit, keydown, DOMContentLoaded"],
+    ],
+  },
+  {
+    phase: "Phase 6",
+    title: "Performance & Good Practice",
+    desc: "Writing DOM code that stays fast and clean.",
+    topics: [
+      ["Reflow & repaint", "Why layout thrashing is slow"],
+      ["Batching DOM changes", "Fragments & minimizing reads/writes"],
+      ["Debouncing / throttling handlers", "For scroll, resize, input"],
+      ["innerHTML vs. createElement (security & speed)", "Avoid injecting untrusted HTML"],
+    ],
+  },
+];
+
+const roadmapEl = document.getElementById('roadmap');
+const STORAGE_KEY = 'dom-topics-progress-v1';
+let saved = {};
+try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch (e) {}
+
+let allCount = 0;
+ROADMAP.forEach((p, pi) => {
+  const sec = document.createElement('section');
+  sec.className = 'phase';
+  const head = document.createElement('div');
+  head.className = 'phase-head';
+  head.innerHTML = `<span class="phase-num">${p.phase}</span><h2>${p.title}</h2>`;
+  sec.appendChild(head);
+  const desc = document.createElement('p');
+  desc.className = 'phase-desc';
+  desc.textContent = p.desc;
+  sec.appendChild(desc);
+  const ul = document.createElement('ul');
+  ul.className = 'topics';
+  p.topics.forEach((t, ti) => {
+    const id = `p${pi}-t${ti}`;
+    allCount++;
+    const li = document.createElement('li');
+    const label = document.createElement('label');
+    label.className = 'item';
+    const isChecked = !!saved[id];
+    if (isChecked) label.classList.add('checked');
+    label.innerHTML = `<input type="checkbox" data-id="${id}" ${isChecked ? 'checked' : ''}>
+      <span class="item-text"><strong>${t[0]}</strong><span class="note">${t[1]}</span></span>`;
+    li.appendChild(label);
+    ul.appendChild(li);
+  });
+  sec.appendChild(ul);
+  roadmapEl.appendChild(sec);
+});
+
+const fill = document.getElementById('fill');
+const pctText = document.getElementById('pctText');
+function updateProgress() {
+  const done = Object.values(saved).filter(Boolean).length;
+  const pct = allCount ? Math.round((done / allCount) * 100) : 0;
+  fill.style.width = pct + '%';
+  pctText.textContent = `${done} of ${allCount} complete · ${pct}%`;
+}
+roadmapEl.addEventListener('change', (e) => {
+  if (e.target.matches('input[type="checkbox"]')) {
+    const id = e.target.dataset.id;
+    saved[id] = e.target.checked;
+    e.target.closest('.item').classList.toggle('checked', e.target.checked);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+    updateProgress();
+  }
+});
+document.getElementById('reset').addEventListener('click', () => {
+  saved = {};
+  localStorage.removeItem(STORAGE_KEY);
+  document.querySelectorAll('input[type="checkbox"]').forEach(cb => { cb.checked = false; cb.closest('.item').classList.remove('checked'); });
+  updateProgress();
+});
+updateProgress();
+</script>
+</body>
 </html>
